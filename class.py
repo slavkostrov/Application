@@ -3,7 +3,7 @@ from random import randint
 
 
 root = tk.Tk()
-root.geometry('500x500')
+root.geometry('1000x800')
 root.title('Mini-game')
 root.resizable(0, 0)
 
@@ -11,7 +11,7 @@ root.resizable(0, 0)
 def hand(event, ball):
     global count
     global t
-    if count == 5:
+    if count == 10:
         count = 0
         t += 1000
     if (event.x < ball.x + ball.r and event.x > ball.x - ball.r and event.y < ball.y + ball.r and event.y > ball.y - ball.r) :
@@ -23,15 +23,15 @@ class Ball:
     id_ball, x, y, r, dx, dy = 0, 0, 0, 0, 0, 0
     def __init__(self):
         self.r = randint(25, 100)
-        self.x = randint(1 + self.r, 500 - self.r)
-        self.y = randint(1 + self.r, 500 - self.r)
+        self.x = randint(1 + self.r, 1000 - self.r)
+        self.y = randint(1 + self.r, 800 - self.r)
         self.dx = 5
         self.dy = 5
         self.id_ball = 0
         area.bind('<Button-1>', lambda event, b = self: hand(event, b))
     
     def show_on_canvas(self):
-        self.id_ball = area.create_oval(self.x - self.r, self.y - self.r, self.x + self.r, self.y + self.r, fill = 'floral white', outline = 'blue')
+        self.id_ball = area.create_oval(self.x - self.r, self.y - self.r, self.x + self.r, self.y + self.r, fill = 'red', outline = 'blue')
 
 
 
