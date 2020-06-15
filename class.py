@@ -8,15 +8,19 @@ root.title('Mini-game')
 root.resizable(0, 0)
 
 
+
 def hand(event, ball):
     global count
     global t
-    if count == 10:
+    global score
+    if count >= 10 and t < 1000:
         count = 0
         t += 1000
     if (event.x < ball.x + ball.r and event.x > ball.x - ball.r and event.y < ball.y + ball.r and event.y > ball.y - ball.r) :
         area.delete(ball.id_ball)
         count +=1
+        score += 1
+        lbl.configure(text = str(score))
 
 class Ball:
     global area
@@ -44,6 +48,7 @@ def tick():
         t -= 100
     for x in balls:
         area.delete(x.id_ball)
+        balls.remove(x)
     x = Ball()
     x.show_on_canvas()
     balls += [x]
@@ -52,11 +57,13 @@ def tick():
 
 def main():
     global area
+    global lbl
+    global score
+    score = 0
     area = tk.Canvas(root, bg = 'grey')
     area.pack(expand = True, fill = tk.BOTH)
     
     global balls
-    a = Ball()
     
     global t
     t = 2000
@@ -64,8 +71,12 @@ def main():
     global count
     count = 0
 
+    a = Ball()
     a.show_on_canvas()
     balls = [a]
+
+    lbl = tk.Label(root, text = '0')
+    lbl.place(x = 5, y = 5)
 
     tick()
 
