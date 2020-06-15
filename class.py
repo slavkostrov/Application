@@ -18,6 +18,7 @@ def hand(event, ball):
         t += 1000
     if (event.x < ball.x + ball.r and event.x > ball.x - ball.r and event.y < ball.y + ball.r and event.y > ball.y - ball.r) :
         area.delete(ball.id_ball)
+        balls.remove(ball)
         count +=1
         score += 1
         lbl.configure(text = str(score))
@@ -44,11 +45,18 @@ def tick():
     global balls
     global area
     global t
+    global score
     if t > 500:
         t -= 100
+    i = 0
     for x in balls:
         area.delete(x.id_ball)
         balls.remove(x)
+        i += 1
+    
+    if i > 0:
+        score -= 10
+        lbl.configure(text = str(score))
     x = Ball()
     x.show_on_canvas()
     balls += [x]
@@ -70,10 +78,8 @@ def main():
 
     global count
     count = 0
-
-    a = Ball()
-    a.show_on_canvas()
-    balls = [a]
+    
+    balls = []
 
     lbl = tk.Label(root, text = '0')
     lbl.place(x = 5, y = 5)
