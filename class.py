@@ -1,6 +1,6 @@
 import tkinter as tk
 from random import randint
-
+from tkinter import messagebox
 
 root = tk.Tk()
 root.geometry('1000x800')
@@ -36,7 +36,7 @@ class Ball:
         area.bind('<Button-1>', lambda event, b = self: hand(event, b))
     
     def show_on_canvas(self):
-        self.id_ball = area.create_oval(self.x - self.r, self.y - self.r, self.x + self.r, self.y + self.r, fill = 'red', outline = 'blue')
+        self.id_ball = area.create_oval(self.x - self.r, self.y - self.r, self.x + self.r, self.y + self.r, fill = 'orchid3', outline = 'black')
 
 
 
@@ -46,6 +46,29 @@ def tick():
     global area
     global t
     global score
+
+    if score < -50:
+        ans = messagebox.askyesno("You lose", "Restart?")
+        if ans == False:
+            exit()
+        else:
+            score = 0
+            t = 2000
+            area.delete(balls[0].id_ball)
+            balls = []
+    
+    if score >= 100:
+        ans = messagebox.askyesno("You win", "Restart?")
+        if ans == False:
+            exit()
+        else:
+            score = 0
+            t = 2000
+            area.delete(balls[0].id_ball)
+            balls = []
+
+    
+
     if t > 500:
         t -= 100
     i = 0
@@ -68,7 +91,7 @@ def main():
     global lbl
     global score
     score = 0
-    area = tk.Canvas(root, bg = 'grey')
+    area = tk.Canvas(root, bg = 'bisque')
     area.pack(expand = True, fill = tk.BOTH)
     
     global balls
